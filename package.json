@@ -1,0 +1,35 @@
+{
+  "name": "@rs/rmb-to-rmb",
+  "version": "0.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "RS-rmbToRMB",
+    "triples": {}
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@napi-rs/cli": "^2.18.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.28",
+    "jest": "^29.7.0",
+    "nzh": "^1.0.12",
+    "ts-jest": "^29.1.2"
+  },
+  "ava": {
+    "timeout": "3m"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "jest",
+    "universal": "napi universal",
+    "version": "napi version"
+  }
+}
