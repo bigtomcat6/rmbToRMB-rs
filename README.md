@@ -47,5 +47,5 @@ pnpm test
 
 ## Related projects
 
-- [napi-rs]
+- [napi-rs](https://github.com/napi-rs/napi-rs)
 
