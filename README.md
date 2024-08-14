@@ -1,4 +1,4 @@
-# RS-rmbToRMB
+# rmbToRMB-rs
 `Napi` to convert numbers into Chinese format based on `Rust`
 
 这是一个基于`Rust`编写的数字转人民币大写形式的`N-API`库。
