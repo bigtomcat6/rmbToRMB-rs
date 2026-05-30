@@ -40,7 +40,12 @@ fn format_integer(integer: u128) -> String {
 }
 
 fn format_group(group: u16) -> String {
-  let digits = [group / 1000 % 10, group / 100 % 10, group / 10 % 10, group % 10];
+  let digits = [
+    group / 1000 % 10,
+    group / 100 % 10,
+    group / 10 % 10,
+    group % 10,
+  ];
   let mut out = String::new();
   let mut started = false;
   let mut zero_pending = false;
