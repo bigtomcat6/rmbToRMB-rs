@@ -38,7 +38,10 @@ fn split_decimal(input: &str) -> Result<(&str, Option<&str>), RmbError> {
   let mut parts = input.split('.');
   let integer = parts.next().ok_or(RmbError::InvalidFormat)?;
   let fraction = parts.next();
-  if parts.next().is_some() || (integer.is_empty() && fraction.unwrap_or("").is_empty()) {
+  let has_more_parts = parts.next().is_some();
+  let is_empty_decimal = integer.is_empty() && fraction.unwrap_or("").is_empty();
+
+  if has_more_parts || is_empty_decimal {
     return Err(RmbError::InvalidFormat);
   }
   Ok((integer, fraction))
@@ -74,7 +77,10 @@ fn parse_fraction(input: Option<&str>) -> Result<i128, RmbError> {
   }
   let value = match input.len() {
     0 => 0,
-    1 => input.chars().next().unwrap().to_digit(10).unwrap() as i128 * 10,
+    1 => {
+      let digit = input.chars().next().unwrap().to_digit(10).unwrap();
+      digit as i128 * 10
+    }
     2 => input.parse::<i128>().map_err(|_| RmbError::InvalidFormat)?,
     _ => unreachable!(),
   };
