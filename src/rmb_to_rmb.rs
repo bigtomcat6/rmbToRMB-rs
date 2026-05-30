@@ -74,6 +74,49 @@ pub fn to_rmb_upper_from_cents(cents: i128) -> Result<String, RmbError> {
   Ok(out)
 }
 
+/// Parses an integer cents string and converts it into uppercase RMB text.
+///
+/// This is useful for bindings and platforms where a JavaScript number may be
+/// too imprecise for large financial integers.
+///
+/// # Examples
+///
+/// ```
+/// use rmb_upper::to_rmb_upper_from_cents_str;
+///
+/// assert_eq!(to_rmb_upper_from_cents_str("12345").unwrap(), "壹佰贰拾叁元肆角伍分");
+/// ```
+pub fn to_rmb_upper_from_cents_str(cents: &str) -> Result<String, RmbError> {
+  let cents = cents.trim();
+
+  if cents.is_empty() {
+    return Err(RmbError::InvalidFormat);
+  }
+
+  if cents.starts_with('-') {
+    return Err(RmbError::NegativeAmount);
+  }
+
+  let cents = cents.strip_prefix('+').unwrap_or(cents);
+  if cents.is_empty() || !cents.bytes().all(|byte| byte.is_ascii_digit()) {
+    return Err(RmbError::InvalidFormat);
+  }
+
+  let mut value = 0_i128;
+  for byte in cents.bytes() {
+    value = value
+      .checked_mul(10)
+      .and_then(|current| current.checked_add((byte - b'0') as i128))
+      .ok_or(RmbError::TooLarge)?;
+
+    if value > MAX_CENTS {
+      return Err(RmbError::TooLarge);
+    }
+  }
+
+  to_rmb_upper_from_cents(value)
+}
+
 /// Parses a decimal amount string and converts it into uppercase RMB text.
 ///
 /// This function does not round. Inputs with more than two decimal places are
@@ -336,9 +379,19 @@ mod tests {
   }
 
   #[test]
+  fn parses_cents_strings() {
+    assert_eq!(to_rmb_upper_from_cents_str("12345").unwrap(), "壹佰贰拾叁元肆角伍分");
+    assert_eq!(to_rmb_upper_from_cents_str(" +001 ").unwrap(), "零元壹分");
+    assert_eq!(to_rmb_upper_from_cents_str("0").unwrap(), "零元整");
+  }
+
+  #[test]
   fn rejects_invalid_amounts() {
     assert_eq!(to_rmb_upper_from_cents(-1), Err(RmbError::NegativeAmount));
     assert_eq!(to_rmb_upper_from_cents(MAX_CENTS + 1), Err(RmbError::TooLarge));
+    assert_eq!(to_rmb_upper_from_cents_str("-1"), Err(RmbError::NegativeAmount));
+    assert_eq!(to_rmb_upper_from_cents_str("1.00"), Err(RmbError::InvalidFormat));
+    assert_eq!(to_rmb_upper_from_cents_str(""), Err(RmbError::InvalidFormat));
     assert_eq!(to_rmb_upper_from_str("-1.00"), Err(RmbError::NegativeAmount));
     assert_eq!(to_rmb_upper_from_str("1.234"), Err(RmbError::TooManyDecimalPlaces));
     assert_eq!(to_rmb_upper_from_str("1.2a"), Err(RmbError::InvalidFormat));
