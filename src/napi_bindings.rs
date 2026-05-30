@@ -14,9 +14,12 @@ pub fn rmb_to_rmb(amount: f64) -> napi::Result<String> {
 }
 
 /// Converts an amount represented in cents into uppercase RMB text.
+///
+/// This accepts a decimal string so callers do not need to rely on JavaScript
+/// number precision for large cent values.
 #[napi]
-pub fn rmb_to_rmb_from_cents(cents: i64) -> napi::Result<String> {
-  crate::to_rmb_upper_from_cents(cents as i128).map_err(to_napi_error)
+pub fn rmb_to_rmb_from_cents(cents: String) -> napi::Result<String> {
+  crate::to_rmb_upper_from_cents_str(&cents).map_err(to_napi_error)
 }
 
 /// Parses a decimal amount string and converts it into uppercase RMB text.
