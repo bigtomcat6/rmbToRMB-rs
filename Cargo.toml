@@ -14,7 +14,7 @@ crate-type = ["rlib", "cdylib"]
 
 [features]
 default = []
-napi = ["dep:napi", "dep:napi-derive", "dep:napi-build"]
+napi = ["dep:napi", "dep:napi-derive"]
 
 [dependencies]
 napi = { version = "2.12.2", default-features = false, features = ["napi4"], optional = true }
