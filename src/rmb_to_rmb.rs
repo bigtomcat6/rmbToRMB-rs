@@ -25,7 +25,9 @@ impl fmt::Display for RmbError {
       Self::NegativeAmount => write!(f, "amount cannot be negative"),
       Self::NonFiniteAmount => write!(f, "amount must be a finite number"),
       Self::InvalidFormat => write!(f, "amount format is invalid"),
-      Self::TooManyDecimalPlaces => write!(f, "amount cannot have more than two decimal places"),
+      Self::TooManyDecimalPlaces => {
+        write!(f, "amount cannot have more than two decimal places")
+      }
       Self::TooLarge => write!(f, "amount is too large"),
     }
   }
