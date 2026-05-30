@@ -65,10 +65,28 @@ fn parses_strings() {
 
 #[test]
 fn rejects_invalid_amounts() {
-  assert_eq!(to_rmb_upper_from_cents(-1), Err(RmbError::NegativeAmount));
-  assert_eq!(to_rmb_upper_from_cents(MAX_CENTS + 1), Err(RmbError::TooLarge));
-  assert_eq!(to_rmb_upper_from_cents_str("-1"), Err(RmbError::NegativeAmount));
-  assert_eq!(to_rmb_upper_from_cents_str("1.00"), Err(RmbError::InvalidFormat));
-  assert_eq!(to_rmb_upper_from_str("1.234"), Err(RmbError::TooManyDecimalPlaces));
-  assert_eq!(to_rmb_upper_from_f64(f64::NAN), Err(RmbError::NonFiniteAmount));
+  assert_eq!(
+    to_rmb_upper_from_cents(-1),
+    Err(RmbError::NegativeAmount),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents(MAX_CENTS + 1),
+    Err(RmbError::TooLarge),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents_str("-1"),
+    Err(RmbError::NegativeAmount),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents_str("1.00"),
+    Err(RmbError::InvalidFormat),
+  );
+  assert_eq!(
+    to_rmb_upper_from_str("1.234"),
+    Err(RmbError::TooManyDecimalPlaces),
+  );
+  assert_eq!(
+    to_rmb_upper_from_f64(f64::NAN),
+    Err(RmbError::NonFiniteAmount),
+  );
 }
