@@ -1,18 +1,27 @@
 [package]
 edition = "2021"
-name = "rs-rmbtormb"
-version = "0.0.0"
+name = "rmb-upper"
+version = "0.1.0"
+description = "Convert RMB/CNY amounts to Chinese uppercase financial text."
+license = "MIT"
+repository = "https://github.com/bigtomcat6/rmbToRMB-rs"
+readme = "README.md"
+keywords = ["rmb", "cny", "chinese", "currency", "uppercase"]
+categories = ["value-formatting", "internationalization"]
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["rlib", "cdylib"]
+
+[features]
+default = []
+napi = ["dep:napi", "dep:napi-derive", "dep:napi-build"]
 
 [dependencies]
-# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
-napi = { version = "2.12.2", default-features = false, features = ["napi4"] }
-napi-derive = "2.12.2"
+napi = { version = "2.12.2", default-features = false, features = ["napi4"], optional = true }
+napi-derive = { version = "2.12.2", optional = true }
 
 [build-dependencies]
-napi-build = "2.0.1"
+napi-build = { version = "2.0.1", optional = true }
 
 [profile.release]
 lto = true
