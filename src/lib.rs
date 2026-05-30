@@ -1,15 +1,11 @@
 #![deny(clippy::all)]
 
-#[macro_use]
-extern crate napi_derive;
-
 mod rmb_to_rmb;
-pub use rmb_to_rmb::rmb_to_rmb;
 
+#[cfg(feature = "napi")]
+mod napi_bindings;
 
-// Code automatically generated when creating RS-NAPI
-// You can delete it. 
-#[napi]
-pub fn sum(a: i32, b: i32) -> i32 {
-  a + b
-}
+pub use rmb_to_rmb::{
+    to_rmb_upper_from_cents, to_rmb_upper_from_cents_str, to_rmb_upper_from_f64,
+    to_rmb_upper_from_str, RmbError, MAX_CENTS, MAX_INTEGER,
+};
