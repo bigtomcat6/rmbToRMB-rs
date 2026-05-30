@@ -9,31 +9,58 @@ fn s(codes: &[u32]) -> String {
 
 #[test]
 fn formats_zero_and_plain_integers() {
-  assert_eq!(to_rmb_upper_from_cents(0).unwrap(), s(&[0x96f6, 0x5143, 0x6574]));
-  assert_eq!(to_rmb_upper_from_cents(100).unwrap(), s(&[0x58f9, 0x5143, 0x6574]));
-  assert_eq!(to_rmb_upper_from_cents(1_000).unwrap(), s(&[0x58f9, 0x62fe, 0x5143, 0x6574]));
+  assert_eq!(
+    to_rmb_upper_from_cents(0).unwrap(),
+    s(&[0x96f6, 0x5143, 0x6574]),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents(100).unwrap(),
+    s(&[0x58f9, 0x5143, 0x6574]),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents(1_000).unwrap(),
+    s(&[0x58f9, 0x62fe, 0x5143, 0x6574]),
+  );
 }
 
 #[test]
 fn formats_decimal_parts() {
-  assert_eq!(to_rmb_upper_from_cents(1).unwrap(), s(&[0x96f6, 0x5143, 0x58f9, 0x5206]));
-  assert_eq!(to_rmb_upper_from_cents(10).unwrap(), s(&[0x96f6, 0x5143, 0x58f9, 0x89d2]));
-  assert_eq!(to_rmb_upper_from_cents(101).unwrap(), s(&[0x58f9, 0x5143, 0x96f6, 0x58f9, 0x5206]));
+  assert_eq!(
+    to_rmb_upper_from_cents(1).unwrap(),
+    s(&[0x96f6, 0x5143, 0x58f9, 0x5206]),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents(10).unwrap(),
+    s(&[0x96f6, 0x5143, 0x58f9, 0x89d2]),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents(101).unwrap(),
+    s(&[0x58f9, 0x5143, 0x96f6, 0x58f9, 0x5206]),
+  );
 }
 
 #[test]
 fn formats_group_boundaries_and_internal_zeroes() {
-  assert_eq!(to_rmb_upper_from_cents(1_000_000).unwrap(), s(&[0x58f9, 0x4e07, 0x5143, 0x6574]));
+  assert_eq!(
+    to_rmb_upper_from_cents(1_000_000).unwrap(),
+    s(&[0x58f9, 0x4e07, 0x5143, 0x6574]),
+  );
   assert_eq!(
     to_rmb_upper_from_cents(1_000_100).unwrap(),
-    s(&[0x58f9, 0x4e07, 0x96f6, 0x58f9, 0x5143, 0x6574])
+    s(&[0x58f9, 0x4e07, 0x96f6, 0x58f9, 0x5143, 0x6574]),
   );
 }
 
 #[test]
 fn parses_strings() {
-  assert_eq!(to_rmb_upper_from_str("001.20").unwrap(), s(&[0x58f9, 0x5143, 0x8d30, 0x89d2]));
-  assert_eq!(to_rmb_upper_from_cents_str("12345").unwrap(), to_rmb_upper_from_str("123.45").unwrap());
+  assert_eq!(
+    to_rmb_upper_from_str("001.20").unwrap(),
+    s(&[0x58f9, 0x5143, 0x8d30, 0x89d2]),
+  );
+  assert_eq!(
+    to_rmb_upper_from_cents_str("12345").unwrap(),
+    to_rmb_upper_from_str("123.45").unwrap(),
+  );
 }
 
 #[test]
