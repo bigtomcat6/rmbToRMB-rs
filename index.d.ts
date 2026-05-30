@@ -11,8 +11,9 @@ export function rmbToRmb(n: number): string
 
 /**
  * Converts an amount represented in cents into uppercase RMB text.
+ * The cents value is accepted as a string for large integer amounts.
  */
-export function rmbToRmbFromCents(cents: bigint): string
+export function rmbToRmbFromCents(cents: string): string
 
 /**
  * Parses a decimal amount string and converts it into uppercase RMB text.
