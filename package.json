@@ -1,6 +1,7 @@
 {
   "name": "@rs/rmb-to-rmb",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Convert RMB/CNY amounts to Chinese uppercase financial text from Rust or Node.js.",
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
@@ -25,10 +26,11 @@
   },
   "scripts": {
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
-    "build:debug": "napi build --platform",
+    "build": "napi build --platform --release --features napi",
+    "build:debug": "napi build --platform --features napi",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "jest",
+    "test": "cargo test",
+    "test:js": "jest --passWithNoTests",
     "universal": "napi universal",
     "version": "napi version"
   }
