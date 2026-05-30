@@ -1,8 +1,0 @@
-tab_spaces = 2
-edition = "2021"
-ignore = [
-  "src/rmb_to_rmb.rs",
-  "src/rmb_to_rmb/format.rs",
-  "src/rmb_to_rmb/parse.rs",
-  "src/rmb_to_rmb/tests.rs",
-]
